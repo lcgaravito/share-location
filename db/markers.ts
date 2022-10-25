@@ -4,7 +4,7 @@ export const MARKERS_DATA = [
     latitude: 41.3997999,
     longitude: 2.1909796,
     color: "#2F3136",
-    name: "Reboot Studio",
+    name: "Lugar #1",
     direction: "Carrer de Pujades, 100",
   },
   {
@@ -12,7 +12,7 @@ export const MARKERS_DATA = [
     latitude: 41.3995445,
     longitude: 2.1915268,
     color: "#A3EAD8",
-    name: "Cravy",
+    name: "Lugar #2",
     direction: "Carrer de Pujades, 101",
   },
   {
@@ -20,7 +20,7 @@ export const MARKERS_DATA = [
     latitude: 41.4009999,
     longitude: 2.1919999,
     color: "#E990BB",
-    name: "Dribbble",
+    name: "Lugar #3",
     direction: "Carrer de Pujades, 102",
   },
   {
@@ -28,7 +28,7 @@ export const MARKERS_DATA = [
     latitude: 41.4001999,
     longitude: 2.1900096,
     color: "#EFD080",
-    name: "Basecamp",
+    name: "Lugar #4",
     direction: "Carrer de Pujades, 103",
   },
   {
@@ -36,7 +36,7 @@ export const MARKERS_DATA = [
     latitude: 41.40009,
     longitude: 2.1909796,
     color: "#98AFE9",
-    name: "Discord",
+    name: "Lugar #5",
     direction: "Carrer de Pujades, 104",
   },
   {
@@ -44,7 +44,7 @@ export const MARKERS_DATA = [
     latitude: 41.4009999,
     longitude: 2.1909796,
     color: "#4E87EB",
-    name: "1 Password",
+    name: "Lugar #6",
     direction: "Carrer de Pujades, 105",
   },
 ];

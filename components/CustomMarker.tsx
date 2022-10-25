@@ -3,6 +3,8 @@ import { Marker, MarkerProps } from "react-native-maps";
 import Animated from "react-native-reanimated";
 import { StyleSheet, View } from "react-native";
 import { useMarkerAnimation } from "../hooks";
+import { MaterialIcons } from "@expo/vector-icons";
+import { Colors } from "../constants";
 
 type CustomMarkerProps = {
   id: string;
@@ -39,7 +41,15 @@ export const CustomMarker = ({
             },
             animatedStyles,
           ]}
-        ></Animated.View>
+        >
+          {id === "currentLocation" && (
+            <MaterialIcons
+              name="my-location"
+              size={21}
+              color={Colors.primary}
+            />
+          )}
+        </Animated.View>
       </View>
     </Marker>
   );
