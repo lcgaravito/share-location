@@ -7,10 +7,13 @@ Mobile application written in react native to save, manage and share places
 ### Portrait Screenshots 📱
 
 <div style="display: flex; flex-wrap: wrap;">
+  <img src="https://raw.githubusercontent.com/lcgaravito/share-location/main/screenshots/screenshot-empty-locations.png" width="300" height="auto" />
+  <img src="https://raw.githubusercontent.com/lcgaravito/share-location/main/screenshots/screenshot-add-location.png" width="300" height="auto" />
   <img src="https://raw.githubusercontent.com/lcgaravito/share-location/main/screenshots/screenshot-current-location.png" width="300" height="auto" />
   <img src="https://raw.githubusercontent.com/lcgaravito/share-location/main/screenshots/screenshot-locations.png" width="300" height="auto" />
-  <img src="https://raw.githubusercontent.com/lcgaravito/share-location/main/screenshots/screenshot-add-location.png" width="300" height="auto" />
 </div>
+
+screenshot-empty-locations
 
 ## Prerequisites 💻
 
