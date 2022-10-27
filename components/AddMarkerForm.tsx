@@ -12,6 +12,7 @@ import {
   selectLocations,
   setAddMarkerMode,
 } from "../redux/slices/locationsSlice";
+import ImageSelector from "./ImageSelector";
 
 type AddMarkerFormProps = {
   location?: Location;
@@ -20,11 +21,11 @@ type AddMarkerFormProps = {
 
 const AddMarkerForm = ({ location, onCancel }: AddMarkerFormProps) => {
   const [name, setName] = useState("");
+  const [image, setImage] = useState("");
   const dispatch = useAppDispatch();
-  const { addMarkerMode } = useAppSelector(selectLocations);
   const handleAddMarker = () => {
     if (name && location) {
-      dispatch(saveLocation({ name, location }));
+      dispatch(saveLocation({ name, image, location }));
       handleCancel();
     }
   };
@@ -40,6 +41,7 @@ const AddMarkerForm = ({ location, onCancel }: AddMarkerFormProps) => {
         </Text>
       ) : (
         <View>
+          <ImageSelector onImage={(imageURI) => setImage(imageURI)} />
           <Text style={styles.text}>Name for this place:</Text>
           <Input style={styles.input} value={name} onChangeText={setName} />
           <View style={styles.buttonsContainer}>

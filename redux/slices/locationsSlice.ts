@@ -40,7 +40,15 @@ export const { setLoading, setCurrentLocation, addMarker, setAddMarkerMode } =
   locationsSlice.actions;
 
 export const saveLocation =
-  ({ name, location }: { name: string; location: Location }): AppThunk =>
+  ({
+    name,
+    image,
+    location,
+  }: {
+    name: string;
+    image: string;
+    location: Location;
+  }): AppThunk =>
   async (dispatch) => {
     dispatch(setLoading(true));
 
@@ -54,9 +62,7 @@ export const saveLocation =
       throw new Error(
         "No se han encontrado datos para las coordenadas seleccionadas"
       );
-
     const address = resData.results[0].formatted_address;
-    console.log("address", address);
 
     dispatch(
       addMarker({
@@ -68,6 +74,7 @@ export const saveLocation =
             Math.floor(Math.random() * COLORS_MARKER_DATA.length)
           ],
         name,
+        image,
         direction: address,
       })
     );

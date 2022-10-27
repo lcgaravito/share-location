@@ -4,6 +4,7 @@ export interface MarkerType {
   longitude: number;
   color: string;
   name: string;
+  image: string;
   direction: string;
 }
 

@@ -19,11 +19,13 @@ export const ListItem = ({ item, onPressElement }: ListItemProps) => {
       onPress={() => onPressElement(item.id, item.latitude, item.longitude)}
     >
       <View style={[styles.logo, { backgroundColor: item.color }]}>
-        {/* <Image
-          source={item.img}
-          style={styles.logoImage}
-          resizeMode="contain"
-        /> */}
+        {item.image && (
+          <Image
+            source={{ uri: item.image }}
+            style={styles.logoImage}
+            resizeMode="contain"
+          />
+        )}
       </View>
       <View>
         <Text style={styles.title}>{item.name}</Text>
@@ -48,8 +50,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   logoImage: {
-    height: "65%",
-    width: "65%",
+    height: "80%",
+    width: "80%",
+    borderRadius: 50,
   },
   title: {
     fontSize: 14,

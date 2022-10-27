@@ -46,8 +46,10 @@ const BottomSheet = ({ onPressElement }: BottomSheetProps) => {
       contentContainerStyle={styles.contentContainerStyle}
       ListEmptyComponent={
         <View style={styles.emptyContainer}>
-          <Text>Add a marker by pressing the button</Text>
           <AddMarkerButton width={50} height={50} />
+          <Text style={{ marginTop: 5 }}>
+            Add a marker by pressing the button
+          </Text>
         </View>
       }
     />

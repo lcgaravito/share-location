@@ -73,11 +73,12 @@ const MapScreen = () => {
             key={marker.id}
             id={marker.id}
             title={marker.name}
+            imageURI={marker.image}
             selectedMarker={selectedMarker}
             color={marker.color}
             latitude={marker.latitude}
             longitude={marker.longitude}
-          ></CustomMarker>
+          />
         ))}
       </MapView>
       {addMarkerMode ? (
