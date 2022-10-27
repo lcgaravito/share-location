@@ -4,6 +4,7 @@ import {
   Platform,
   StyleSheet,
   Text,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
@@ -12,7 +13,6 @@ import Card from "./Card";
 import { Location } from "../types";
 import Input from "./Input";
 import { useAppDispatch } from "../redux/hooks";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { Colors } from "../constants";
 import { Ionicons } from "@expo/vector-icons";
 import { saveLocation, setAddMarkerMode } from "../redux/slices/locationsSlice";
@@ -134,5 +134,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     fontSize: 18,
+  },
+  buttonTest: {
+    flex: 0.5,
+    elevation: 2,
+    margin: 5,
+    padding: 10,
+    borderRadius: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    backgroundColor: Colors.gray,
   },
 });
