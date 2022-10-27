@@ -6,7 +6,7 @@ import { useMap } from "../hooks/useMap";
 import { AddMarkerForm, BottomSheet, CustomMarker } from "../components";
 import { TopBar } from "../components/TopBar";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { selectLocations } from "../redux/slices/locationsSlice";
+import { getLocations, selectLocations } from "../redux/slices/locationsSlice";
 import { Location } from "../types";
 
 const MapScreen = () => {
@@ -22,6 +22,7 @@ const MapScreen = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     handelResetInitialPosition(dispatch);
+    dispatch(getLocations());
   }, []);
 
   const handleSelectLocation = (event: MapEvent) => {

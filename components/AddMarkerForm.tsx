@@ -1,17 +1,21 @@
-import { StyleSheet, Text, View } from "react-native";
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import Card from "./Card";
 import { Location } from "../types";
 import Input from "./Input";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAppDispatch } from "../redux/hooks";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Colors } from "../constants";
 import { Ionicons } from "@expo/vector-icons";
-import {
-  saveLocation,
-  selectLocations,
-  setAddMarkerMode,
-} from "../redux/slices/locationsSlice";
+import { saveLocation, setAddMarkerMode } from "../redux/slices/locationsSlice";
 import ImageSelector from "./ImageSelector";
 
 type AddMarkerFormProps = {
@@ -40,35 +44,46 @@ const AddMarkerForm = ({ location, onCancel }: AddMarkerFormProps) => {
           Select a place on the map
         </Text>
       ) : (
-        <View>
-          <ImageSelector onImage={(imageURI) => setImage(imageURI)} />
-          <Text style={styles.text}>Name for this place:</Text>
-          <Input style={styles.input} value={name} onChangeText={setName} />
-          <View style={styles.buttonsContainer}>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonCancel]}
-              onPress={() => {
-                handleCancel();
-              }}
-            >
-              <Text style={styles.textStyle}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonAdd]}
-              onPress={() => {
-                handleAddMarker();
-              }}
-            >
-              <Text style={styles.textStyle}>Add Location</Text>
-              <Ionicons
-                style={{ marginLeft: 5 }}
-                name="add-circle"
-                size={24}
-                color={Colors.white}
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+          <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            <View>
+              <Text style={styles.text}>Name for this place:</Text>
+              <Input
+                style={styles.input}
+                placeholder="Favorite place, Alex's House..."
+                value={name}
+                onChangeText={setName}
               />
-            </TouchableOpacity>
-          </View>
-        </View>
+              <ImageSelector onImage={(imageURI) => setImage(imageURI)} />
+              <View style={styles.buttonsContainer}>
+                <TouchableOpacity
+                  style={[styles.button, styles.buttonCancel]}
+                  onPress={() => {
+                    handleCancel();
+                  }}
+                >
+                  <Text style={styles.textStyle}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.button, styles.buttonAdd]}
+                  onPress={() => {
+                    handleAddMarker();
+                  }}
+                >
+                  <Text style={styles.textStyle}>Add Location</Text>
+                  <Ionicons
+                    style={{ marginLeft: 5 }}
+                    name="add-circle"
+                    size={24}
+                    color={Colors.white}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
       )}
     </Card>
   );
@@ -79,7 +94,7 @@ export default AddMarkerForm;
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    bottom: 30,
+    bottom: 60,
     width: "90%",
     zIndex: 1,
     paddingHorizontal: 10,

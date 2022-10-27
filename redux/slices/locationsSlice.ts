@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { URL_GEOCODING } from "../../constants";
+import { fetchLocations, insertLocation } from "../../db";
 import { COLORS_MARKER_DATA } from "../../db/markers";
 import { Location, MarkerType } from "../../types";
 import { AppThunk, RootState } from "../store";
@@ -30,14 +31,22 @@ export const locationsSlice = createSlice({
     addMarker: (state, { payload }: PayloadAction<MarkerType>) => {
       state.markers.push(payload);
     },
+    setMarkers: (state, { payload }: PayloadAction<MarkerType[]>) => {
+      state.markers = payload;
+    },
     setAddMarkerMode: (state, { payload }: PayloadAction<boolean>) => {
       state.addMarkerMode = payload;
     },
   },
 });
 
-export const { setLoading, setCurrentLocation, addMarker, setAddMarkerMode } =
-  locationsSlice.actions;
+export const {
+  setLoading,
+  setCurrentLocation,
+  addMarker,
+  setMarkers,
+  setAddMarkerMode,
+} = locationsSlice.actions;
 
 export const saveLocation =
   ({
@@ -62,24 +71,50 @@ export const saveLocation =
       throw new Error(
         "No se han encontrado datos para las coordenadas seleccionadas"
       );
-    const address = resData.results[0].formatted_address;
+    const direction = resData.results[0].formatted_address;
 
-    dispatch(
-      addMarker({
-        id: Math.random().toString(),
-        latitude: location.latitude,
-        longitude: location.longitude,
-        color:
-          COLORS_MARKER_DATA[
-            Math.floor(Math.random() * COLORS_MARKER_DATA.length)
-          ],
+    const color =
+      COLORS_MARKER_DATA[Math.floor(Math.random() * COLORS_MARKER_DATA.length)];
+
+    try {
+      const result = await insertLocation({
         name,
         image,
-        direction: address,
-      })
-    );
+        direction,
+        color,
+        latitude: location.latitude,
+        longitude: location.longitude,
+      });
+      console.log("result: ", result);
+      dispatch(
+        addMarker({
+          id: result.insertId?.toString() || Math.random().toString(),
+          name,
+          image,
+          direction,
+          color,
+          latitude: location.latitude,
+          longitude: location.longitude,
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+
     dispatch(setLoading(false));
   };
+
+export const getLocations = (): AppThunk => async (dispatch) => {
+  dispatch(setLoading(true));
+  try {
+    const result = await fetchLocations();
+    console.log("result: ", result);
+    dispatch(setMarkers(result.rows._array));
+  } catch (error) {
+    console.log(error);
+  }
+  dispatch(setLoading(false));
+};
 
 export const selectLocations = (state: RootState) => state.locations;
 
