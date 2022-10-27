@@ -61,3 +61,20 @@ export const fetchLocations = () => {
   });
   return promise;
 };
+
+export const deleteLocation = (id: string) => {
+  const promise = new Promise<SQLite.SQLResultSet>((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DELETE FROM locations WHERE id = ?",
+        [id],
+        (_, result) => resolve(result),
+        (_, err) => {
+          reject(err);
+          return false;
+        }
+      );
+    });
+  });
+  return promise;
+};

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { URL_GEOCODING } from "../../constants";
-import { fetchLocations, insertLocation } from "../../db";
+import { deleteLocation, fetchLocations, insertLocation } from "../../db";
 import { COLORS_MARKER_DATA } from "../../db/markers";
 import { Location, MarkerType } from "../../types";
 import { AppThunk, RootState } from "../store";
@@ -29,10 +29,13 @@ export const locationsSlice = createSlice({
       state.currentLocation = payload;
     },
     addMarker: (state, { payload }: PayloadAction<MarkerType>) => {
-      state.markers.push(payload);
+      state.markers.unshift(payload);
     },
     setMarkers: (state, { payload }: PayloadAction<MarkerType[]>) => {
       state.markers = payload;
+    },
+    removeLocationWithId: (state, { payload }: PayloadAction<string>) => {
+      state.markers = state.markers.filter((marker) => marker.id !== payload);
     },
     setAddMarkerMode: (state, { payload }: PayloadAction<boolean>) => {
       state.addMarkerMode = payload;
@@ -45,6 +48,7 @@ export const {
   setCurrentLocation,
   addMarker,
   setMarkers,
+  removeLocationWithId,
   setAddMarkerMode,
 } = locationsSlice.actions;
 
@@ -115,6 +119,20 @@ export const getLocations = (): AppThunk => async (dispatch) => {
   }
   dispatch(setLoading(false));
 };
+
+export const removeLocation =
+  (id: string): AppThunk =>
+  async (dispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const result = await deleteLocation(id);
+      console.log("result: ", result);
+      dispatch(removeLocationWithId(id));
+    } catch (error) {
+      console.log(error);
+    }
+    dispatch(setLoading(false));
+  };
 
 export const selectLocations = (state: RootState) => state.locations;
 
