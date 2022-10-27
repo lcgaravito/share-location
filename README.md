@@ -26,6 +26,8 @@ screenshot-empty-locations
 - Clone the project via git
 - Enter the project folder through the terminal:`cd share-location`
 - Install dependencies: `npm i`
+- Use a proprietary Google Cloud Platform `API_KEY` and place it in the `constants/Map.ts` file.
+- You must have the Geocoding API, Maps JavaScript API, Maps SDK for Android, and Maps SDK for iOS enabled.
 
 ## Launch 🚀
 
