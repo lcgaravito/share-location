@@ -1,8 +1,8 @@
 import {
-  Button,
   Dimensions,
   ListRenderItem,
   StyleSheet,
+  Text,
   View,
 } from "react-native";
 import React from "react";
@@ -11,6 +11,7 @@ import { MarkerType } from "../types";
 import { ListItem } from "./ListItem";
 import { useAppSelector } from "../redux/hooks";
 import { selectLocations } from "../redux/slices/locationsSlice";
+import { AddMarkerButton } from "./AddMarkerButton";
 
 type BottomSheetProps = {
   onPressElement: (id: string, lat: number, long: number) => void;
@@ -43,6 +44,12 @@ const BottomSheet = ({ onPressElement }: BottomSheetProps) => {
       keyExtractor={(i) => i.id}
       renderItem={renderItem}
       contentContainerStyle={styles.contentContainerStyle}
+      ListEmptyComponent={
+        <View style={styles.emptyContainer}>
+          <Text>Add a marker by pressing the button</Text>
+          <AddMarkerButton width={50} height={50} />
+        </View>
+      }
     />
   );
 };
@@ -64,5 +71,8 @@ const styles = StyleSheet.create({
     height: 4,
     backgroundColor: "#E1E1E1",
     borderRadius: 17,
+  },
+  emptyContainer: {
+    alignItems: "center",
   },
 });

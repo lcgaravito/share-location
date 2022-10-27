@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Avatar } from "./Avatar";
+import { AddMarkerButton } from "./AddMarkerButton";
 import { RefreshButton } from "./RefreshButton";
 
 type TopBarProps = {
@@ -10,7 +10,7 @@ type TopBarProps = {
 export function TopBar({ onPressElement }: TopBarProps) {
   return (
     <View style={styles.container}>
-      <Avatar />
+      <AddMarkerButton />
       <RefreshButton onPressElement={onPressElement} />
     </View>
   );

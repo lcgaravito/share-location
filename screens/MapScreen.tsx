@@ -1,12 +1,13 @@
 import { Dimensions, StyleSheet, View } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Colors } from "../constants";
-import MapView from "react-native-maps";
+import MapView, { MapEvent, Marker } from "react-native-maps";
 import { useMap } from "../hooks/useMap";
-import { BottomSheet, CustomMarker } from "../components";
+import { AddMarkerForm, BottomSheet, CustomMarker } from "../components";
 import { TopBar } from "../components/TopBar";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { selectLocations } from "../redux/slices/locationsSlice";
+import { Location } from "../types";
 
 const MapScreen = () => {
   const {
@@ -15,11 +16,23 @@ const MapScreen = () => {
     handleNavigateToPoint,
     handelResetInitialPosition,
   } = useMap();
-  const { currentLocation, markers } = useAppSelector(selectLocations);
+  const [selectedLocation, setSelectedLocation] = useState<Location>();
+  const { currentLocation, markers, addMarkerMode } =
+    useAppSelector(selectLocations);
   const dispatch = useAppDispatch();
   useEffect(() => {
     handelResetInitialPosition(dispatch);
   }, []);
+
+  const handleSelectLocation = (event: MapEvent) => {
+    if (addMarkerMode) {
+      const { latitude, longitude } = event.nativeEvent.coordinate;
+      setSelectedLocation({
+        latitude,
+        longitude,
+      });
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -34,6 +47,7 @@ const MapScreen = () => {
           longitudeDelta: 0.003,
         }}
         mapType="standard"
+        onPress={(event) => handleSelectLocation(event)}
       >
         {currentLocation && (
           <CustomMarker
@@ -43,6 +57,15 @@ const MapScreen = () => {
             color={Colors.secondary}
             latitude={currentLocation.latitude}
             longitude={currentLocation.longitude}
+          />
+        )}
+        {selectedLocation && (
+          <Marker
+            title={"Selected Location"}
+            coordinate={{
+              latitude: selectedLocation.latitude,
+              longitude: selectedLocation.longitude,
+            }}
           />
         )}
         {markers.map((marker) => (
@@ -57,7 +80,14 @@ const MapScreen = () => {
           ></CustomMarker>
         ))}
       </MapView>
-      <BottomSheet onPressElement={handleNavigateToPoint} />
+      {addMarkerMode ? (
+        <AddMarkerForm
+          location={selectedLocation}
+          onCancel={() => setSelectedLocation(undefined)}
+        />
+      ) : (
+        <BottomSheet onPressElement={handleNavigateToPoint} />
+      )}
     </View>
   );
 };
